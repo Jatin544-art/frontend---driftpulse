@@ -14,10 +14,15 @@ export default function Devices() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredDevices = mockDevices.filter(dev => 
-    dev.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    dev.ip.includes(searchTerm)
-  );
+  const filteredDevices = mockDevices.filter(dev => {
+    const term = searchTerm.toLowerCase();
+    return (
+      dev.id.toLowerCase().includes(term) || 
+      dev.ip.toLowerCase().includes(term) ||
+      dev.risk.toLowerCase().includes(term) ||
+      dev.policy.toLowerCase().includes(term)
+    );
+  });
 
   const getRiskColor = (risk) => {
     switch(risk) {
@@ -48,7 +53,7 @@ export default function Devices() {
           <Search className="search-icon" size={20} />
           <input 
             type="text" 
-            placeholder="Search devices, IPs or IDs" 
+            placeholder="Search devices, IPs, IDs, Risk or Policy" 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
